@@ -1,0 +1,21 @@
+/home/ding/Downloads/CLion-2023.2.2/clion-2023.2.2/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /tmp/tmp.SHV6n4A6bJ -B /tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding
+CMake Warning at CMakeLists.txt:27 (find_package):
+  By not providing "Findbase64.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "base64", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "base64" with any
+  of the following names:
+
+    base64Config.cmake
+    base64-config.cmake
+
+  Add the installation prefix of "base64" to CMAKE_PREFIX_PATH or set
+  "base64_DIR" to a directory containing one of the above files.  If "base64"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+
+
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding

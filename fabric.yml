@@ -1,0 +1,53 @@
+defects:
+  -
+    id: 0
+    name: BB
+    enable: True
+  -
+    id: 1
+    name: CS
+    enable: True
+  -
+    id: 2
+    name: DJ
+    enable: True
+  -
+    id: 3
+    name: DPD
+    enable: True
+  -
+    id: 4
+    name: DW
+    enable: True
+  -
+    id: 5
+    name: GS
+    enable: True
+  -
+    id: 6
+    name: JK
+    enable: True
+  -
+    id: 7
+    name: PD
+    enable: True
+  -
+    id: 8
+    name: WZ
+    enable: True
+  -
+    id: 9
+    name: ZH
+    enable: True
+  -
+    id: 10
+    name: ZK
+    enable: True
+  -
+    id: 11
+    name: ZW
+    enable: True
+gpu: [0, 1]
+confidence_threshold: 0.3
+log_level: 1  #[1=debug, 2=info]
+model_dir: /data/model/fabric_gpu  #11类模型名称

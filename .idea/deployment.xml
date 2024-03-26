@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="Remote_ding (714d5919-3701-4eac-a25a-919c8ab7401a)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.SHV6n4A6bJ" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-remote_ding" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="Remote_sw (64a9aa6a-9ee1-4e51-b5f4-38d6d629f1ac)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

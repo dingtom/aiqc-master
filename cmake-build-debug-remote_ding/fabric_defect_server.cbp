@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="fabric_defect_server"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\usr\;CMake Files\..\..\usr\local\;CMake Files\..\..\usr\local\lib\;CMake Files\..\..\usr\local\lib\cmake\;CMake Files\..\..\usr\local\lib\cmake\opencv4\;CMake Files\..\..\usr\local\lib\cmake\websocketpp\;CMake Files\..\..\usr\local\lib\cmake\yaml-cpp\;CMake Files\..\..\usr\lib\;CMake Files\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\;CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\;CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_system-1.71.0\;CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\spdlog\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="fabric_defect_server">
+				<Option output="/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/fabric_defect_server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_SYSTEM_DYN_LINK"/>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add option="-DSPDLOG_COMPILED_LIB"/>
+					<Add directory="/usr/local/cuda/include"/>
+					<Add directory="/home/twc/TensorRT-8.0.1.6/include"/>
+					<Add directory="/opt/libjpeg-turbo/include"/>
+					<Add directory="/usr/local/include/opencv4"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 fabric_defect_server"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="fabric_defect_server/fast">
+				<Option output="/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/fabric_defect_server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_SYSTEM_DYN_LINK"/>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add option="-DSPDLOG_COMPILED_LIB"/>
+					<Add directory="/usr/local/cuda/include"/>
+					<Add directory="/home/twc/TensorRT-8.0.1.6/include"/>
+					<Add directory="/opt/libjpeg-turbo/include"/>
+					<Add directory="/usr/local/include/opencv4"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 fabric_defect_server/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/src/detector.cpp">
+			<Option target="fabric_defect_server"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/src/detector.h">
+			<Option target="fabric_defect_server"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/src/main.cpp">
+			<Option target="fabric_defect_server"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/src/manager.cpp">
+			<Option target="fabric_defect_server"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/src/manager.h">
+			<Option target="fabric_defect_server"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/opencv4/OpenCVConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/opencv4/OpenCVConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/opencv4/OpenCVModules-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/opencv4/OpenCVModules.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/websocketpp/websocketpp-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\websocketpp\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/websocketpp/websocketpp-configVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\websocketpp\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/yaml-cpp/yaml-cpp-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\yaml-cpp\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/yaml-cpp/yaml-cpp-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\yaml-cpp\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets-noconfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\yaml-cpp\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\yaml-cpp\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/BoostDetectToolset-1.71.0.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/boost_system-1.71.0/boost_system-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_system-1.71.0\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/boost_system-1.71.0/boost_system-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_system-1.71.0\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/boost_system-1.71.0/libboost_system-variant-shared.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_system-1.71.0\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/boost_system-1.71.0/libboost_system-variant-static.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_system-1.71.0\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/spdlog/spdlogConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\spdlog\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/spdlog/spdlogConfigTargets-none.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\spdlog\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/spdlog/spdlogConfigTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\spdlog\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.SHV6n4A6bJ/../../usr/lib/x86_64-linux-gnu/cmake/spdlog/spdlogConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\lib\x86_64-linux-gnu\cmake\spdlog\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
