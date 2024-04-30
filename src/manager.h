@@ -69,7 +69,7 @@ private:
     std::set<int> use_gpus;
     std::string config_file;
     std::string version;
-    std::char model_dir;
+    std::string model_dir;
 
     std::vector<std::thread*> decode_workers;
     std::vector<std::thread*> inference_workers;

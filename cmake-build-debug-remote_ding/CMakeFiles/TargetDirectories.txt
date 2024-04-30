@@ -1,3 +1,0 @@
-/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/CMakeFiles/fabric_defect_server.dir
-/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/CMakeFiles/edit_cache.dir
-/tmp/tmp.SHV6n4A6bJ/cmake-build-debug-remote_ding/CMakeFiles/rebuild_cache.dir

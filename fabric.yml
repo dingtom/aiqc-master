@@ -50,4 +50,4 @@ defects:
 gpu: [0, 1]
 confidence_threshold: 0.3
 log_level: 1  #[1=debug, 2=info]
-model_dir: /data/model/fabric_gpu  #11类模型名称
+model_dir: ./dongli0102_  #11类模型名称

@@ -42,30 +42,40 @@ static void resizeKeepRatio(cv::Mat &src, cv::Mat &dst, int dst_w, int dst_h, fl
     cv::copyMakeBorder(rs, dst, 0, dst_h - rs_h, 0, dst_w - rs_w, cv::BORDER_CONSTANT, cv::Scalar(114, 114, 114));
 }
 
+
 static void nms(std::vector <Object> &objects, float nms_threshold) {
     // 首先按照对象的置信度从高到低排序整个对象列表
     std::sort(objects.begin(), objects.end(), [](Object a, Object b) { return a.confidence > b.confidence; });
     // 初始化一个与对象数量相同的浮点数向量vArea，用于存储每个边界框的面积
     std::vector<float> vArea(objects.size());
     for (int i = 0; i < int(objects.size()); ++i) {
+        // 计算每个对象的边界框面积
         vArea[i] = objects[i].bbox.width * objects[i].bbox.height;
     }
+    // 双层循环遍历所有对象对，检查是否有重叠的边界框
     for (int i = 0; i < int(objects.size()); ++i) {
         for (int j = i + 1; j < int(objects.size());) {
+            // 计算两个边界框的左上角和右下角坐标
             float xx1 = (std::max)(objects[i].bbox.x, objects[j].bbox.x);
             float yy1 = (std::max)(objects[i].bbox.y, objects[j].bbox.y);
             float xx2 = (std::min)(objects[i].bbox.x + objects[i].bbox.width,
                                    objects[j].bbox.x + objects[j].bbox.width);
             float yy2 = (std::min)(objects[i].bbox.y + objects[i].bbox.height,
                                    objects[j].bbox.y + objects[j].bbox.height);
+            // 计算两个边界框相交区域的宽度和高度
             float w = (std::max)(float(0), xx2 - xx1 + 1);
             float h = (std::max)(float(0), yy2 - yy1 + 1);
+            // 计算两个边界框的交集面积
             float inter = w * h;
+            // 计算交并比（IoU），即交集面积除以两者并集面积
             float ovr = inter / (vArea[i] + vArea[j] - inter);
             if (ovr >= nms_threshold) {
+                // 移除置信度较低的对象（此处假设j指向的是较靠后且置信度更低的对象）
                 objects.erase(objects.begin() + j);
+                // 同时更新vArea数组，移除对应已删除对象的面积
                 vArea.erase(vArea.begin() + j);
             } else {
+                // 若交并比小于等于阈值，则保留两个框并移动到下一个待比较对象
                 j++;
             }
         }
@@ -118,8 +128,8 @@ Detector::Detector(const char *model_path, int gpu_id, std::string config_file,
     conf_thresh = config["confidence_threshold"].as<float>();
     logger->info("detection confidence threshold = {:.2f}", conf_thresh);
 
-    input_w = 960;
-    input_h = 608;
+    input_w = 1920;
+    input_h = 1216;
     strides = {8, 16, 32};
     generateGridStrides(strides, grid_strides);
     input_size = 3 * input_w * input_h;
@@ -271,6 +281,7 @@ void Detector::generateGridStrides(std::vector<int> &strides, std::vector <GridA
         }
     }
 }
+
 
 void Detector::postprocess(float *output_blob, float scale, int img_w, int img_h, std::vector <Object> &objects) {
     // 遍历网格步长信息集合，grid_strides 中的每个元素包含用于定位预测框的网格坐标和步长信息。

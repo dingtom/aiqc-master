@@ -1,0 +1,140 @@
+defects:
+  -
+    id: 0
+    name: ZC
+    enable: True
+    threshold: 0.1
+  -
+    id: 1
+    name: JF
+    enable: True
+    threshold: 0.1
+  -
+    id: 2
+    name: ZJ
+    enable: True
+    threshold: 0.1
+  -
+    id: 3
+    name: HFT
+    enable: True
+    threshold: 0.1
+  -
+    id: 4
+    name: FG
+    enable: True
+    threshold: 0.1
+  -
+    id: 5
+    name: DBZ
+    enable: True
+    threshold: 0.1
+  -
+    id: 6
+    name: SZZ
+    enable: True
+    threshold: 0.1
+  -
+    id: 7
+    name: ZBWJC
+    enable: True
+    threshold: 0.1
+  -
+    id: 8
+    name: JGZ
+    enable: True
+    threshold: 0.1
+  -
+    id: 9
+    name: XC
+    enable: True
+    threshold: 0.1
+  -
+    id: 10
+    name: TZD
+    enable: True
+    threshold: 0.1
+  -
+    id: 11
+    name: JTC
+    enable: True
+    threshold: 0.1
+  -
+    id: 12
+    name: YW
+    enable: True
+    threshold: 0.1
+  -
+    id: 13
+    name: GS
+    enable: True
+    threshold: 0.1
+  -
+    id: 14
+    name: X
+    enable: True
+    threshold: 0.1
+  -
+    id: 15
+    name: CW
+    enable: True
+    threshold: 0.1
+  -
+    id: 16
+    name: BB
+    enable: True
+    threshold: 0.1
+  -
+    id: 17
+    name: LR
+    enable: True
+    threshold: 0.1
+  -
+    id: 18
+    name: XZ
+    enable: True
+    threshold: 0.1
+  -
+    id: 19
+    name: DS
+    enable: True
+    threshold: 0.1
+  -
+    id: 20
+    name: HBY
+    enable: True
+    threshold: 0.1
+  -
+    id: 21
+    name: ZY
+    enable: True
+    threshold: 0.1
+  -
+    id: 22
+    name: FT
+    enable: True
+    threshold: 0.1
+  -
+    id: 23
+    name: ZH
+    enable: True
+    threshold: 0.1
+  -
+    id: 24
+    name: JGW
+    enable: True
+    threshold: 0.1
+  -
+    id: 25
+    name: SW
+    enable: True
+    threshold: 0.1
+  -
+    id: 26
+    name: DB
+    enable: True
+    threshold: 0.1
+gpu: [0, 1]
+confidence_threshold: 0.1
+log_level: 1  #[1=debug, 2=info]
+model_dir: ./dongli0102

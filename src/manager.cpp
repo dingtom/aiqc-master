@@ -57,6 +57,7 @@ void Manager::stopService() {
     manager->stop();
 }
 
+
 void Manager::init(int port, std::string config_file) {
     m_server.clear_error_channels(websocketpp::log::elevel::all);
     m_server.set_error_channels(websocketpp::log::elevel::rerror);
@@ -71,15 +72,17 @@ void Manager::init(int port, std::string config_file) {
     this->config_file = config_file;
     this->manager_logger = spdlog::stdout_color_st("manager");
     this->websocket_logger = spdlog::stdout_color_mt("websocket");
-
     YAML::Node config = YAML::LoadFile(config_file);
-    YAML::Node defects = config["defects"];
-    YAML::Node model_dir = config["model_dir"];
-    model_dir = model_dir.as<std::char>();
 
+    // 假设 node 是 YAML::Node 类型，代表 YAML 文件中的某个节点
+    YAML::Node defects = config["defects"];
     for (int i = 0; i < defects.size(); i++) {
         class_names.push_back(defects[i]["name"].as<std::string>());
     }
+    YAML::Node model_dir1 = config["model_dir"];
+    this->model_dir = config["model_dir"].as<std::string>();
+    spdlog::info("model_dir: {}", model_dir);
+
     YAML::Node visible_gpus = config["gpu"];
     for (int i = 0; i < visible_gpus.size(); i++) {
         use_gpus.insert(visible_gpus[i].as<int>());
@@ -461,7 +464,9 @@ void Manager::inference(int gpu_id) {
     auto logger = spdlog::stdout_color_st(logger_name);
 
     char model_path[256];
-    sprintf(model_path, "%s/fabric_gpu%d.model", MODEL_DIR, gpu_id);
+    sprintf(model_path, "%s/fabric_gpu%d.model", model_dir.c_str(), gpu_id);
+
+    spdlog::info("model path: {}", model_path);
     Detector *detector = new Detector(model_path, gpu_id, config_file, logger);
     while (running) {
         inference_lock.lock();
@@ -541,6 +546,7 @@ void Manager::sendResult() {
                 obj_result["y"] = (int) obj.bbox.y;
                 obj_result["w"] = (int) obj.bbox.width;
                 obj_result["h"] = (int) obj.bbox.height;
+                obj_result["r"] = static_cast<int>(obj.confidence * 100.0f);
                 defects.push_back(obj_result);
             }
             jresult["defects"] = defects;
