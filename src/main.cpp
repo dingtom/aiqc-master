@@ -7,7 +7,7 @@
 
 
 void stop_server(int signum) {
-    spdlog::info("recv stop msg");
+    spdlog::info("received stop msg");
     Manager::stopService();
 }
 

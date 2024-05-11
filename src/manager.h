@@ -51,6 +51,7 @@ public:
 private:
     Manager();
     static Manager* getManager();
+    // m_instance是一个静态私有指针，用于存储Manager类的唯一实例
     static Manager* m_instance;
 
     void init(int port, std::string config_file);
