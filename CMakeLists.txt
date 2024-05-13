@@ -29,10 +29,10 @@ include_directories(/usr/local/cuda/include)
 link_directories(/usr/local/cuda/lib64)
 
 # tensorrt
-#include_directories(/home/TensorRT-8.5.3.1/include)
-#link_directories(/home/TensorRT-8.5.3.1/lib)
-include_directories(/home/ding/TensorRT-8.6.1.6/include)
-link_directories(/home/ding/TensorRT-8.6.1.6/lib)
+include_directories(/home/TensorRT-8.5.3.1/include)
+link_directories(/home/TensorRT-8.5.3.1/lib)
+#include_directories(/home/ding/TensorRT-8.5.3.1/include)
+#link_directories(/home/ding/TensorRT-8.5.3.1/lib)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Ofast -Wfatal-errors -D_MWAITXINTRIN_H_INCLUDED")
 

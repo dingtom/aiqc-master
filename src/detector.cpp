@@ -166,14 +166,14 @@ Detector::Detector(const char *model_path, int gpu_id, std::string config_file,
         }
         logger->debug("encoded model size = {:d}, decoded model size = {:d}", encoded_size, model_size);
     } else {
-        logger->error("load model {} fail", model_path);
+        logger->error("load model file {} fail", model_path);
     }
     engine = runtime->deserializeCudaEngine(decoded_model, model_size);
     if (decoded_model) {
         delete[] decoded_model;
     }
     if (engine == nullptr) {
-        logger->error("load model {} fail", model_path);
+        logger->error("deserializeCudaEngine {} fail", model_path);
     } else {
         logger->info("load model success");
     }

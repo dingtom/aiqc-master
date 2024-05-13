@@ -137,4 +137,4 @@ defects:
 gpu: [0, 1]
 confidence_threshold: 0.1
 log_level: 1  #[1=debug, 2=info]
-model_dir: ./dongli0102
+model_dir: /home/ding/fabric_server/programs/aiqc-master/cmake-build-debug-remote_ding/dongli0102
