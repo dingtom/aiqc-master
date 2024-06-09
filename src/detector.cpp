@@ -210,24 +210,24 @@ Detector::~Detector() {
 }
 
 void Detector::process(std::vector <cv::Mat> &images, std::vector <std::vector<Object>> &results) {
+    // 设置当前使用的GPU设备ID
     cudaSetDevice(gpu_id);
-
+    // 创建一个新的CUDA流，用于异步数据传输和计算
     cudaStream_t stream;
     cudaStreamCreate(&stream);
-
-    int processedImg = 0;
-    while (processedImg < images.size()) {
-        int curBatchSize = 0;
-        if (processedImg + MAX_BATCH < images.size()) {
-            curBatchSize = MAX_BATCH;
-        } else {
-            curBatchSize = images.size() - processedImg;
-        }
-
+    // 初始化已处理图像的数量
+    int processedNum = 0;
+    while (processedNum < images.size()) {
+        // 计算当前批次处理的图像数量，不超过最大批次大小MAX_BATCH
+        int curBatchSize = (processedNum + MAX_BATCH < images.size()) ? MAX_BATCH : (images.size() - processedNum);
+        // 初始化图像缩放比例向量，初始化为1.0
         std::vector<float> scales(curBatchSize, 1.);
         // preprocess
         for (int i = 0; i < curBatchSize; i++) {
-            cv::Mat img = images[processedImg + i];
+            // 获取当前批次的图像
+            cv::Mat img = images[processedNum + i];
+            // 如果图像为空，则创建一个全黑图像并设置默认缩放比例.
+            // 否则，调整图像大小保持长宽比，并记录实际缩放比例
             cv::Mat rgb;
             if (img.empty()) {
                 rgb = cv::Mat(input_h, input_w, CV_8UC3, cv::Scalar(0, 0, 0));
@@ -235,33 +235,39 @@ void Detector::process(std::vector <cv::Mat> &images, std::vector <std::vector<O
             } else {
                 resizeKeepRatio(img, rgb, input_w, input_h, scales[i]);
             }
+            // 图像转为RGB格式并分割通道
             std::vector <cv::Mat> channels;
             cv::split(rgb, channels);
+            // 将每个通道的数据转换为float类型并复制到host_input_buf中
             for (int j = 0; j < 3; j++) {
                 cv::Mat curChannel;
                 channels[j].convertTo(curChannel, CV_32FC1);
                 memcpy(&host_input_buf[j * input_h * input_w], curChannel.data, input_h * input_w * sizeof(float));
             }
+            // 将处理好的图像数据从CPU拷贝到GPU内存中，准备推理
             cudaMemcpyAsync(dev_buf[inputIndex] + i * input_size * sizeof(float), host_input_buf,
                             input_size * sizeof(float), cudaMemcpyHostToDevice, stream);
         }
-
-        // inference
+        // 设置优化配置、输入尺寸，执行模型推理
         context->setOptimizationProfile(0);
         context->setBindingDimensions(0, Dims4(curBatchSize, 3, input_h, input_w));
         context->enqueueV2(dev_buf, stream, nullptr);
+        // 将推理结果从GPU拷贝回CPU内存
         cudaMemcpyAsync(host_output_buf, dev_buf[outputIndex], output_size * sizeof(float) * MAX_BATCH,
                         cudaMemcpyDeviceToHost, stream);
         cudaStreamSynchronize(stream);
-
-        // postprocess
+        // 后处理阶段
         for (int i = 0; i < curBatchSize; i++) {
             std::vector <Object> objects;
+            // 对每张图像的推理结果进行解码，得到目标对象信息
             postprocess(host_output_buf + i * output_size, scales[i], images[i].cols, images[i].rows, objects);
+            // 将解析出的对象信息加入到最终结果容器中
             results.push_back(objects);
         }
-        processedImg += curBatchSize;
+        // 更新已处理图像的数量
+        processedNum += curBatchSize;
     }
+    // 清理CUDA流资源
     cudaStreamDestroy(stream);
 }
 
