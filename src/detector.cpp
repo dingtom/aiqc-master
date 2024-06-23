@@ -14,7 +14,7 @@
 
 /* constant definition */
 static const int MAX_BATCH = 16;
-static const float NMS_THRESH = 0.4;
+static const float NMS_THRESH = 0.1;
 
 /* global variable */
 static Logger gLogger;
