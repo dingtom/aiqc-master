@@ -67,12 +67,24 @@ find_package(spdlog)
 find_package(yaml-cpp)
 
 #build
+#    yolo_utils
 add_library(yolo_utils SHARED
         src/utils/postprocess.cpp
         src/utils/preprocess.cu
 )
 target_link_libraries(yolo_utils PUBLIC ${OpenCV_LIBS})
 set_target_properties(yolo_utils PROPERTIES CUDA_ARCHITECTURES "61;70;75")
+
+#    yolo_plugin
+add_library(yolo_plugin SHARED
+        src/plugins/yoloPlugins.cpp
+        src/plugins/yoloForward_nc.cu
+)
+target_include_directories(yolo_plugin PUBLIC ${TensorRT_INCLUDE_DIRS})
+target_link_libraries(yolo_plugin PUBLIC ${TensorRT_LIBRARIES})
+set_target_properties(yolo_plugin PROPERTIES CUDA_ARCHITECTURES "61;70;75")
+
+#     build
 add_executable(build
         src/build.cu
         ${TensorRT_SAMPLE_DIR}/common/logger.cpp
@@ -82,6 +94,7 @@ target_include_directories(build PRIVATE ${TensorRT_INCLUDE_DIRS} ${TensorRT_SAM
 target_link_libraries(build PRIVATE -Wl,--no-as-needed yolo_plugin) # -Wl,--no-as-needed is needed to avoid linking errors
 target_link_libraries(build PRIVATE yolo_utils)
 set_target_properties(build PROPERTIES CUDA_ARCHITECTURES "61;70;75")
+
 
 # runtime
 #add_executable(${PROJECT_NAME} src/detector.cpp src/manager.cpp src/main.cpp)

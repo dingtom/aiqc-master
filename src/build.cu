@@ -10,14 +10,14 @@
 
 // 定义校准数据读取器
 // 如果要用entropy的话改为：IInt8EntropyCalibrator2
-class CalibrationDataReader : public IInt8MinMaxCalibrator
+class CalibrationDataReader : public nvinfer1::IInt8MinMaxCalibrator
 {
 private:
     std::string mDataDir;
     std::string mCacheFileName;
     std::vector<std::string> mFileNames;
     int mBatchSize;
-    Dims mInputDims;
+    nvinfer1::Dims mInputDims;
     int mInputCount;
     float *mDeviceBatchData{nullptr};
     int mBatchCount;
