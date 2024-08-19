@@ -121,7 +121,11 @@ int main(int argc, char **argv)
     // 命令行获取onnx文件路径、校准数据集路径、校准数据集列表文件
     char *onnx_file_path = argv[1];
     std::string engine_file_path = argv[1];
-    std::replace(engine_file_path.begin(), engine_file_path.end(), 'onnx', 'engine');
+    size_t pos = engine_file_path.rfind("onnx");
+    if (pos != std::string::npos) {
+        engine_file_path.replace(pos, 4, "engine");  // 替换 ".onnx" 为 ".engine"
+    }
+    std::cout << "engine_file_path: " << engine_file_path << std::endl;
 
     char *calib_dir = argv[2];
     char *calib_list_file = argv[3];
@@ -144,7 +148,6 @@ int main(int argc, char **argv)
         std::cout << "Failed to create network" << std::endl;
         return -1;
     }
-    // 与上节课手动创建网络不同，这次使用onnxparser创建网络
 
     // 创建onnxparser，用于解析onnx文件
     auto parser = std::unique_ptr<nvonnxparser::IParser>(nvonnxparser::createParser(*network, sample::gLogger.getTRTLogger()));
@@ -191,6 +194,7 @@ int main(int argc, char **argv)
     builder->setMaxBatchSize(1);
     // 设置最大工作空间（新版本的TensorRT已经废弃了setWorkspaceSize）
     config->setMemoryPoolLimit(nvinfer1::MemoryPoolType::kWORKSPACE, 1 << 30);
+    //    1 << 30 是一个位运算表达式，表示将数字 1 向左移动 30 位。即 2^30   1 GB 的内存大小。
 
     // 创建流，用于设置profile
     auto profileStream = samplesCommon::makeCudaStream();

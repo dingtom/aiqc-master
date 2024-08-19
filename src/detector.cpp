@@ -82,34 +82,42 @@ static void nms(std::vector <Object> &objects, float nms_threshold) {
     }
 }
 
-static void handleErrors(void) {
-    ERR_print_errors_fp(stderr);
-    abort();
+static void handleErrors(void) {  // 定义一个静态函数 handleErrors，用于处理错误
+    ERR_print_errors_fp(stderr);  // 打印错误信息到标准错误输出（stderr）
+    abort();                      // 终止程序执行
 }
 
-static void decrypt(unsigned char *in_buf, unsigned int in_size, unsigned char *out_buf, unsigned long &out_size,
-                    const unsigned char *key, const unsigned char *iv) {
-    EVP_CIPHER_CTX *ctx;
-    int len;
+// 模型解密
+static void decrypt(
+        unsigned char *in_buf,       // 输入缓冲区，包含加密的数据
+        unsigned int in_size,        // 输入缓冲区的大小（字节数）
+        unsigned char *out_buf,      // 输出缓冲区，用于存放解密后的数据
+        unsigned long &out_size,     // 输出缓冲区的大小（字节数），将被更新为实际解密数据的大小
+        const unsigned char *key,    // 密钥，用于解密
+        const unsigned char *iv      // 初始向量，用于 CBC 模式的解密
+) {
+    EVP_CIPHER_CTX *ctx;         // 创建一个 EVP_CIPHER_CTX 对象，用于进行解密操作
+    int out_len;                     // 用于存储每次解密操作后产生的数据长度
 
-    if (!(ctx = EVP_CIPHER_CTX_new())) {
-        handleErrors();
+    if (!(ctx = EVP_CIPHER_CTX_new())) {  // 创建一个新的 EVP_CIPHER_CTX 对象
+        handleErrors();                  // 如果创建失败，则调用 handleErrors 函数处理错误
     }
 
-    if (1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv)) {
-        handleErrors();
+    if (1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv)) {  // 初始化解密上下文
+        handleErrors();                      // 如果初始化失败，则调用 handleErrors 函数处理错误
     }
 
-    if (1 != EVP_DecryptUpdate(ctx, out_buf, &len, in_buf, in_size)) {
-        handleErrors();
+    if (1 != EVP_DecryptUpdate(ctx, out_buf, &out_len, in_buf, in_size)) {  // 解密输入缓冲区中的大部分数据
+        handleErrors();                      // 如果解密失败，则调用 handleErrors 函数处理错误
     }
-    out_size = len;
+    out_size = out_len;                         // 更新输出缓冲区的大小
 
-    if (1 != EVP_DecryptFinal_ex(ctx, out_buf + len, &len)) {
-        handleErrors();
+    if (1 != EVP_DecryptFinal_ex(ctx, out_buf + out_len, &out_len)) {  // 解密剩余的数据，并完成解密操作
+        handleErrors();                  // 如果解密失败，则调用 handleErrors 函数处理错误
     }
-    out_size += len;
+    out_size += out_len;                     // 更新输出缓冲区的大小，包括最后解密的数据
 }
+
 
 Detector::Detector(const char *model_path, int gpu_id, std::string config_file,
                    std::shared_ptr <spdlog::logger> logger) {
@@ -135,14 +143,15 @@ Detector::Detector(const char *model_path, int gpu_id, std::string config_file,
     input_size = 3 * input_w * input_h;
     output_size = grid_strides.size() * (num_classes + 5);
 
-    this->gpu_id = gpu_id;
-    cudaSetDevice(gpu_id);
 
+    // GPU 信息
     cudaDeviceProp props;
     cudaGetDeviceProperties(&props, gpu_id);
     logger->info("run on {}", props.name);
 
     // create infer runtime
+    this->gpu_id = gpu_id;
+    cudaSetDevice(gpu_id);
     runtime = createInferRuntime(gLogger);
 
     // read engine and deserialize
@@ -169,6 +178,7 @@ Detector::Detector(const char *model_path, int gpu_id, std::string config_file,
         logger->error("load model file {} fail", model_path);
     }
     engine = runtime->deserializeCudaEngine(decoded_model, model_size);
+    if (engine)
     if (decoded_model) {
         delete[] decoded_model;
     }

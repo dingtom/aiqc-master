@@ -101,6 +101,7 @@ void Manager::init(int port, std::string config_file) {
     // 从YAML配置文件加载配置
     YAML::Node config = YAML::LoadFile(config_file);
     // 读取缺陷类别配置
+
     YAML::Node defects = config["defects"];
     for (int i = 0; i < defects.size(); i++) {
         // 将缺陷名称添加到class_names向量中
@@ -120,14 +121,15 @@ void Manager::init(int port, std::string config_file) {
     }
 
     // 读取版本信息
-    std::ifstream ifs("version");
-    if (ifs.is_open()) {
-        // 如果文件打开成功，读取第一行作为版本信息
-        std::getline(ifs, this->version);
-    } else {
-        // 否则版本信息默认为"NA"
-        this->version = "NA";
-    }
+//    std::ifstream ifs("version");
+//    if (ifs.is_open()) {
+//        // 如果文件打开成功，读取第一行作为版本信息
+//        std::getline(ifs, this->version);
+//    } else {
+//        // 否则版本信息默认为"NA"
+//        this->version = "NA";
+//    }
+    this->version = model_dir;
     // 记录日志，显示正在运行的Fabric缺陷算法服务器版本信息
     manager_logger->info("running fabric defect algorithm server, version: {}", this->version);
 }
@@ -238,10 +240,10 @@ void Manager::msgHandler(websocketpp::connection_hdl hdl, server::message_ptr ms
     // deal with flaw command
     if (subpath == "/flaw") {
         if (msg->get_opcode() == websocketpp::frame::opcode::TEXT) {
-            std::string str = msg->get_payload();
-            websocket_logger->debug("received text data {:.2f}KB", str.size() / 1024.0);
+            std::string payload = msg->get_payload();
+            websocket_logger->debug("received text data {:.2f}KB", payload.size() / 1024.0);
             try {
-                json data = json::parse(str);
+                json data = json::parse(payload);
                 for (auto s_data: data) {
                     std::string batch_no = s_data.at("no").get<std::string>();
                     std::string base64_image = s_data.at("image").get<std::string>();
@@ -288,11 +290,11 @@ void Manager::msgHandler(websocketpp::connection_hdl hdl, server::message_ptr ms
                 websocket_logger->error("handle message error: {}", e.what());
             }
         } else {
-            std::string str = msg->get_payload();
-            websocket_logger->debug("received binary data {:.2f}KB", str.size() / 1024.0);
+            std::string payload = msg->get_payload();
+            websocket_logger->debug("received binary data {:.2f}KB", payload.size() / 1024.0);
 #ifdef PASS_BINARY
-            const char* data = str.c_str();
-            size_t total_size = str.size();
+            const char* data = payload.c_str();
+            size_t total_size = payload.size();
             size_t cur_size = 0;
             const char* cur_data = data;
             while (cur_size < total_size)
@@ -348,9 +350,9 @@ void Manager::msgHandler(websocketpp::connection_hdl hdl, server::message_ptr ms
         // deal with system command
     else if (subpath == "/system") {
         if (msg->get_opcode() == websocketpp::frame::opcode::TEXT) {
-            std::string str = msg->get_payload();
+            std::string payload = msg->get_payload();
             try {
-                json data = json::parse(str);
+                json data = json::parse(payload);
                 std::string cmd = data.at("command").get<std::string>();
                 std::transform(cmd.begin(), cmd.end(), cmd.begin(), [](unsigned char c) { return std::tolower(c); });
                 websocket_logger->info("received command: {}", cmd);
