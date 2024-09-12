@@ -143,7 +143,6 @@ Detector::Detector(const char *model_path, int gpu_id, std::string config_file,
     input_size = 3 * input_w * input_h;
     output_size = grid_strides.size() * (num_classes + 5);
 
-
     // GPU 信息
     cudaDeviceProp props;
     cudaGetDeviceProperties(&props, gpu_id);
@@ -281,7 +280,6 @@ void Detector::process(std::vector <cv::Mat> &images, std::vector <std::vector<O
     cudaStreamDestroy(stream);
 }
 
-
 void Detector::generateGridStrides(std::vector<int> &strides, std::vector <GridAndStride> &grid_strides) {
     for (auto stride: strides) {
         // 根据输入图像的高度（input_h）和当前遍历到的步长值（stride），计算网格在垂直方向（Y轴）的数量（num_grid_y）
@@ -297,7 +295,6 @@ void Detector::generateGridStrides(std::vector<int> &strides, std::vector <GridA
         }
     }
 }
-
 
 void Detector::postprocess(float *output_blob, float scale, int img_w, int img_h, std::vector <Object> &objects) {
     // 遍历网格步长信息集合，grid_strides 中的每个元素包含用于定位预测框的网格坐标和步长信息。

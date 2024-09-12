@@ -98,19 +98,13 @@ void Manager::init(int port, std::string config_file) {
     this->manager_logger = spdlog::stdout_color_st("manager");
     this->websocket_logger = spdlog::stdout_color_mt("websocket");
 
-    // 从YAML配置文件加载配置
-    YAML::Node config = YAML::LoadFile(config_file);
-    // 读取缺陷类别配置
 
+    YAML::Node config = YAML::LoadFile(config_file)
     YAML::Node defects = config["defects"];
     for (int i = 0; i < defects.size(); i++) {
-        // 将缺陷名称添加到class_names向量中
         class_names.push_back(defects[i]["name"].as<std::string>());
     }
-
-    // 读取模型目录配置
     this->model_dir = config["model_dir"].as<std::string>();
-    // 记录日志，显示模型目录
     spdlog::info("model_dir: {}", model_dir);
 
     // 读取GPU配置
@@ -130,7 +124,6 @@ void Manager::init(int port, std::string config_file) {
 //        this->version = "NA";
 //    }
     this->version = model_dir;
-    // 记录日志，显示正在运行的Fabric缺陷算法服务器版本信息
     manager_logger->info("running fabric defect algorithm server, version: {}", this->version);
 }
 
@@ -617,22 +610,15 @@ void Manager::inference(int gpu_id) {
             // 释放锁，准备执行推理
             inference_lock.unlock();
 
-            // 日志记录当前批次大小
             logger->debug("infer batch size {}", images.size());
 
-            // 对每个任务进行日志记录
             for (int i = 0; i < inference_results.size(); i++) {
                 logger->debug("task {}", inference_results[i].no);
             }
 
-            // 记录推理开始时间
             auto t1 = std::chrono::steady_clock::now();
-
-            // 执行模型推理
             std::vector<std::vector<Object>> objects;
             detector->process(images, objects);
-
-            // 记录推理结束时间，计算并打印推理耗时
             auto t2 = std::chrono::steady_clock::now();
             auto runtime = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
             logger->debug("runtime {}ms", runtime.count());
@@ -640,7 +626,6 @@ void Manager::inference(int gpu_id) {
             // 分配推理结果到每个响应任务，并加入到回复队列
             for (int i = 0; i < inference_results.size(); i++) {
                 inference_results[i].results = objects[i];
-
                 // 锁定回复任务队列
                 reply_lock.lock();
                 reply_tasks.push(inference_results[i]); // 加入回复队列
@@ -649,10 +634,7 @@ void Manager::inference(int gpu_id) {
         }
     }
 
-    // 清理Detector实例
     delete detector;
-
-    // 记录线程停止信息
     logger->info("stop");
 }
 
