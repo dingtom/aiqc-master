@@ -53,8 +53,18 @@ Manager *Manager::getManager() {
 
 void Manager::startService(int port, std::string config_file) {
     Manager *manager = Manager::getManager();
-    manager->init(port, config_file);
-    manager->run();
+    try {
+        manager->init(port, config_file);
+    } catch (std::exception &e) {
+        manager->manager_logger->error("Failed to initialize manager: {}", e.what());
+        return;
+    }
+    try {
+        manager->run();
+    } catch (std::exception &e) {
+        manager->manager_logger->error("Failed to run manager: {}", e.what());
+        return;
+    }
 }
 
 void Manager::stopService() {
@@ -99,15 +109,18 @@ void Manager::init(int port, std::string config_file) {
     this->websocket_logger = spdlog::stdout_color_mt("websocket");
 
 
-    YAML::Node config = YAML::LoadFile(config_file)
-    YAML::Node defects = config["defects"];
-    for (int i = 0; i < defects.size(); i++) {
-        class_names.push_back(defects[i]["name"].as<std::string>());
-    }
+    YAML::Node config = YAML::LoadFile(config_file);
     this->model_dir = config["model_dir"].as<std::string>();
     spdlog::info("model_dir: {}", model_dir);
 
-    // 读取GPU配置
+    std::string names;
+    YAML::Node defects = config["defects"];
+    for (int i = 0; i < defects.size(); i++) {
+        class_names.push_back(defects[i]["name"].as<std::string>());
+        names += defects[i]["name"].as<std::string>() + " ";
+    }
+    spdlog::info("class_number: {}, names: {}", class_names.size(), names);
+
     YAML::Node visible_gpus = config["gpu"];
     for (int i = 0; i < visible_gpus.size(); i++) {
         // 将指定的GPU编号插入到use_gpus集合中
@@ -115,14 +128,14 @@ void Manager::init(int port, std::string config_file) {
     }
 
     // 读取版本信息
-//    std::ifstream ifs("version");
-//    if (ifs.is_open()) {
-//        // 如果文件打开成功，读取第一行作为版本信息
-//        std::getline(ifs, this->version);
-//    } else {
-//        // 否则版本信息默认为"NA"
-//        this->version = "NA";
-//    }
+    //    std::ifstream ifs("version");
+    //    if (ifs.is_open()) {
+    //        // 如果文件打开成功，读取第一行作为版本信息
+    //        std::getline(ifs, this->version);
+    //    } else {
+    //        // 否则版本信息默认为"NA"
+    //        this->version = "NA";
+    //    }
     this->version = model_dir;
     manager_logger->info("running fabric defect algorithm server, version: {}", this->version);
 }
@@ -141,13 +154,9 @@ void Manager::run() {
 
     // 获取当前系统中可用的GPU数量
     cudaGetDeviceCount(&num_gpus);
-
-    // 如果没有可用的GPU
     if (num_gpus == 0) {
-        // 日志记录错误信息
         manager_logger->error("no available gpus");
     } else {
-        // 否则，记录可用GPU的数量
         manager_logger->info("{} available gpu(s)", num_gpus);
     }
 
@@ -169,18 +178,12 @@ void Manager::run() {
 
     // 尝试启动WebSocket服务器
     try {
-        // 监听指定端口
         m_server.listen(port);
-        // 开始接受连接
         m_server.start_accept();
-        // 记录日志，表示开始监听端口
         manager_logger->info("start to listen port {}", port);
         // 运行服务器，进入事件循环处理连接和消息
         m_server.run();
-    }
-        // 捕获并处理WebSocket相关的异常
-    catch (websocketpp::exception const &e) {
-        // 记录启动失败的日志，包括异常信息
+    } catch (websocketpp::exception const &e) {
         manager_logger->error("start error: {}", e.what());
     }
 }

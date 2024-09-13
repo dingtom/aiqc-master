@@ -3,16 +3,20 @@
   <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeDeletion="false">
     <option name="confirmBeforeDeletion" value="false" />
     <serverData>
-      <paths name="Remote_ding (714d5919-3701-4eac-a25a-919c8ab7401a)">
+      <paths name="Remote_ding_clion (714d5919-3701-4eac-a25a-919c8ab7401a)">
         <serverdata>
           <mappings>
             <mapping deploy="/home/ding/fabric_server/programs/aiqc-master" local="$PROJECT_DIR$" web="/" />
           </mappings>
+        </serverdata>
+      </paths>
+      <paths name="Remote_ding_cmake (4cf11d1b-8255-4fd2-9cb0-e4dd901d5b2e)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ding/fabric_server/programs/aiqc-master" local="$PROJECT_DIR$" />
+          </mappings>
           <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-remote_ding" />
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-remote_ding-event-trace" />
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-remote_ding-event-trace" />
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-remote_ding" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-remote_ding_cmake" />
           </excludedPaths>
         </serverdata>
       </paths>

@@ -89,9 +89,9 @@ static void handleErrors(void) {  // 定义一个静态函数 handleErrors，用
 
 // 模型解密
 static void decrypt(
-        unsigned char *in_buf,       // 输入缓冲区，包含加密的数据
+        unsigned char *in_buf,
         unsigned int in_size,        // 输入缓冲区的大小（字节数）
-        unsigned char *out_buf,      // 输出缓冲区，用于存放解密后的数据
+        unsigned char *out_buf,
         unsigned long &out_size,     // 输出缓冲区的大小（字节数），将被更新为实际解密数据的大小
         const unsigned char *key,    // 密钥，用于解密
         const unsigned char *iv      // 初始向量，用于 CBC 模式的解密
@@ -100,20 +100,20 @@ static void decrypt(
     int out_len;                     // 用于存储每次解密操作后产生的数据长度
 
     if (!(ctx = EVP_CIPHER_CTX_new())) {  // 创建一个新的 EVP_CIPHER_CTX 对象
-        handleErrors();                  // 如果创建失败，则调用 handleErrors 函数处理错误
+        handleErrors();
     }
 
     if (1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv)) {  // 初始化解密上下文
-        handleErrors();                      // 如果初始化失败，则调用 handleErrors 函数处理错误
+        handleErrors();
     }
 
     if (1 != EVP_DecryptUpdate(ctx, out_buf, &out_len, in_buf, in_size)) {  // 解密输入缓冲区中的大部分数据
-        handleErrors();                      // 如果解密失败，则调用 handleErrors 函数处理错误
+        handleErrors();
     }
     out_size = out_len;                         // 更新输出缓冲区的大小
 
     if (1 != EVP_DecryptFinal_ex(ctx, out_buf + out_len, &out_len)) {  // 解密剩余的数据，并完成解密操作
-        handleErrors();                  // 如果解密失败，则调用 handleErrors 函数处理错误
+        handleErrors();
     }
     out_size += out_len;                     // 更新输出缓冲区的大小，包括最后解密的数据
 }
@@ -123,18 +123,23 @@ Detector::Detector(const char *model_path, int gpu_id, std::string config_file,
                    std::shared_ptr <spdlog::logger> logger) {
     this->logger = logger;
     YAML::Node config = YAML::LoadFile(config_file);
-    YAML::Node defects = config["defects"];
-    num_classes = 0;
-    for (int i = 0; i < defects.size(); i++) {
-        int idx = defects[i]["id"].as<int>();
-        if (!defects[i]["enable"].as<bool>()) {
-            ignore_types.insert(idx);
-            logger->info("disable detecting {}", defects[i]["name"].as<std::string>());
+    try {
+        YAML::Node defects = config["defects"];
+        num_classes = 0;
+        for (int i = 0; i < defects.size(); i++) {
+            int idx = defects[i]["id"].as<int>();
+            if (!defects[i]["enable"].as<bool>()) {
+                ignore_types.insert(idx);
+                logger->info("disable detecting {}", defects[i]["name"].as<std::string>());
+            }
+            num_classes += 1;
         }
-        num_classes += 1;
+        conf_thresh = config["confidence_threshold"].as<float>();
+        logger->info("detection confidence threshold = {:.2f}", conf_thresh);
+    } catch (std::exception &e) {
+        logger->error("parse config file error: {}", e.what());
     }
-    conf_thresh = config["confidence_threshold"].as<float>();
-    logger->info("detection confidence threshold = {:.2f}", conf_thresh);
+
 
     input_w = 1920;
     input_h = 1216;

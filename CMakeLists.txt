@@ -1,12 +1,22 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.23)
 set(CMAKE_CUDA_ARCHITECTURES 75)
 
 project(fabric_defect_server LANGUAGES CXX CUDA)
 
-set(CMAKE_BUILD_TYPE "Release")
+#set(CMAKE_BUILD_TYPE "Release")
 
+# cuda
+set(CMAKE_PREFIX_PATH /usr/local/cuda-11.7/bin)
+set(CUDA_VERSION 11.7)
+find_package(CUDA 11.7 REQUIRED)
+include_directories(/usr/local/cuda/include)
+link_directories(/usr/local/cuda/lib64)
+
+# C++ 标准
 option(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_EXTENSIONS FALSE)
 
 # check memory leak
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=leak -fno-omit-frame-pointer")
@@ -22,26 +32,19 @@ add_definitions(-D PASS_BINARY)
 # base64
 find_package(base64)
 
-# cuda
-set(CMAKE_PREFIX_PATH /usr/local/cuda-11.7/bin)
-set(CUDA_VERSION 11.7)
-find_package(CUDA 11.7 REQUIRED)
-include_directories(/usr/local/cuda/include)
-link_directories(/usr/local/cuda/lib64)
-
 # tensorrt
 include_directories(/home/ding/TensorRT-8.5.3.1/include)
 link_directories(/home/ding/TensorRT-8.5.3.1/lib)
- set(CMAKE_PREFIX_PATH /home/ding/TensorRT-8.5.3.1)
+set(CMAKE_PREFIX_PATH /home/ding/TensorRT-8.5.3.1)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 find_package(TensorRT REQUIRED)
 if (TensorRT_FOUND)
- message(STATUS "TensorRT found")
- include_directories(${TenssorRT_INCLUDE_DIRS})
- link_directories(${TenssorRT_LIBRARY_DIRS})
-else()
- message(FATAL_ERROR "TensorRT not found")
-endif()
+    message(STATUS "TensorRT found")
+    include_directories(${TenssorRT_INCLUDE_DIRS})
+    link_directories(${TenssorRT_LIBRARY_DIRS})
+else ()
+    message(FATAL_ERROR "TensorRT not found")
+endif ()
 #include_directories(/home/ding/TensorRT-8.5.3.1/include)
 #link_directories(/home/ding/TensorRT-8.5.3.1/lib)
 
@@ -97,17 +100,17 @@ set_target_properties(build PROPERTIES CUDA_ARCHITECTURES "61;70;75")
 
 
 # runtime
-#add_executable(${PROJECT_NAME} src/detector.cpp src/manager.cpp src/main.cpp)
-#target_link_libraries(${PROJECT_NAME}
-#        pthread
-#        nvinfer
-#        cudart
-#        ${Boost_LIBRARIES}
-#        ${OpenCV_LIBS}
-#        turbojpeg
-#        base64
-#        crypto
-#        spdlog::spdlog
-#        yaml-cpp)
+add_executable(${PROJECT_NAME} src/detector.cpp src/manager.cpp src/main.cpp)
+target_link_libraries(${PROJECT_NAME}
+        pthread
+        nvinfer
+        cudart
+        ${Boost_LIBRARIES}
+        ${OpenCV_LIBS}
+        turbojpeg
+        base64
+        crypto
+        spdlog::spdlog
+        yaml-cpp)
 
 

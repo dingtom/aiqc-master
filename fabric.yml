@@ -1,53 +1,6 @@
-defects:
-  -
-    id: 0
-    name: BB
-    enable: True
-  -
-    id: 1
-    name: CS
-    enable: True
-  -
-    id: 2
-    name: DJ
-    enable: True
-  -
-    id: 3
-    name: DPD
-    enable: True
-  -
-    id: 4
-    name: DW
-    enable: True
-  -
-    id: 5
-    name: GS
-    enable: True
-  -
-    id: 6
-    name: JK
-    enable: True
-  -
-    id: 7
-    name: PD
-    enable: True
-  -
-    id: 8
-    name: WZ
-    enable: True
-  -
-    id: 9
-    name: ZH
-    enable: True
-  -
-    id: 10
-    name: ZK
-    enable: True
-  -
-    id: 11
-    name: ZW
-    enable: True
-gpu: [0, 1]
+classes: ["JF", "ZJ", "HFT", "FG", "DBZ", "SZZ", "ZBWJC", "JGZ", "XC", "TZD", "JTC", "YW", "GS", "X", "CW", "BB", "LR", "XZ", "DS", "HBY", "ZY", "FT", "ZH", "JGW", "JGW1", "SW", "SW1", "RB", "DZ"  "THBL", "JD", "FTY", "ZZ", "JGW2", "YW1", "HD"]
+classes_ignore: []
+gpu_use: [0]
 confidence_threshold: 0.3
 log_level: 1  #[1=debug, 2=info]
 model_dir: ./dongli0102_  #11类模型名称
